@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 
-export const TableColumn = ({ list }) => {
-  // const [height, setHeight] = useState(0);
+export const TableColumn = ({ list, maxHeight, heightInsideElements }) => {
+  const tableColumnRef = useRef(null);
 
-  // React.useEffect(() => {
-  //   setHeight(maxH);
-  // }, [maxH]);
-  // h-[${height}px]
   return (
     <div
-      className={`border-[1px] border-slate-500 rounded-lg p-2 backdrop-blur-sm overflow-y-auto 
+      className={`border-[1px] border-slate-500 rounded-lg p-2 backdrop-blur-sm overflow-y-auto ${
+        tableColumnRef.current?.offsetHeight > maxHeight - heightInsideElements
+          ? `h-[${maxHeight - heightInsideElements}px]`
+          : `h-fit`
+      }
     `}
+      ref={tableColumnRef}
     >
       {list.map((item, index) => (
         <div key={index} className="mb-1 ">
