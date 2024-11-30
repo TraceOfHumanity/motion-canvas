@@ -66,11 +66,27 @@ export default makeScene2D(function* (view) {
     yield* codeRef().selection(word(0, 21 + i, 1), 0.5);
     yield* waitFor(0.2);
   }
-  yield* codeRef().selection(DEFAULT, 0.6);
+  // yield* codeRef().selection( DEFAULT, 0.6);
+  yield* waitFor(0.5);
+
+  yield* all(
+    codeRef().code.replace(word(1, 16), "(number) => {});", 0.5),
+    codeRef().selection(word(1, 16, 14), 0.5)
+  );
   yield* waitFor(1);
 
   yield* all(
-    codeRef().code.replace(word(1, 15), "((number) => {});", 0.5),
-    codeRef().selection(word(1, 12, 13), 0.5)
+    codeRef().code.replace(
+      word(1, 0),
+      `numberArray.map((number) => {
+    return number * 2;
+});
+    `,
+      0.5
+    ),
+    codeRef().selection(word(2, 0), 0.5)
   );
+  yield* waitFor(1);
+
+  yield* codeRef().selection(codeRef().findAllRanges(/number/gi), 0.6);
 });
