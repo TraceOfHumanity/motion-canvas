@@ -149,6 +149,8 @@ numberArray.map((5) => {
     `;
   yield* waitFor(1);
 
-  
+  yield* codeRef().selection(codeRef().findAllRanges(/\[2, 4, 6, 8, 10\]/gi), 0.6);
+  yield* waitFor(5);
+
 
 });
