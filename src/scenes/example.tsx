@@ -45,8 +45,5 @@ export default makeScene2D(function* (view) {
     </Rect>,
   );
 
-  yield* tween(1, (progress) => {
-    const value = map(0, -200, progress);
-    rect().y(value);
-  });
+  yield* rect().y(-200, 2).wait(1).to(0, 2);
 });
