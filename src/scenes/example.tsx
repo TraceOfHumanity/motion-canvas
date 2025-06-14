@@ -1,5 +1,12 @@
-import { Circle, Layout, makeScene2D, Rect, Txt } from "@motion-canvas/2d";
-import { createRef } from "@motion-canvas/core";
+import {
+  Circle,
+  Icon,
+  Layout,
+  makeScene2D,
+  Rect,
+  Txt,
+} from "@motion-canvas/2d";
+import { createRef, map, tween } from "@motion-canvas/core";
 
 export default makeScene2D(function* (view) {
   // // Create your animations here
@@ -10,15 +17,36 @@ export default makeScene2D(function* (view) {
 
   // yield* circle().scale(2, 2).to(1, 2);
 
+  const rect = createRef<Rect>();
+
   view.add(
-    <Rect layout fill="black" padding={40} radius={20} direction="column">
+    <Rect
+      layout
+      fill="black"
+      padding={40}
+      radius={20}
+      direction="column"
+      gap={10}
+      ref={rect}
+    >
       <Layout direction="row" gap={10} alignItems="center">
-        <Txt text="title" fontSize={100} fill="white" />
-        <Circle size={100} fill="white" />
-        <Circle size={100} fill="white" />
-        <Circle size={100} fill="white" />
+        <Icon
+          icon="material-symbols-light:notifications-sharp"
+          size={50}
+          color="white"
+        />
+        <Txt text="notifications" fontSize={30} fill="white" />
+        <Layout grow={1} />
+        <Circle size={40} fill="#a6e3a1" />
+        <Circle size={40} fill="#f9e2af" />
+        <Circle size={40} fill="#f38ba8" />
       </Layout>
       <Txt text="Hello, world!" fontSize={100} fill="white" />
     </Rect>,
   );
+
+  yield* tween(1, (progress) => {
+    const value = map(0, -200, progress);
+    rect().y(value);
+  });
 });
