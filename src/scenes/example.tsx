@@ -6,7 +6,7 @@ import {
   Rect,
   Txt,
 } from "@motion-canvas/2d";
-import { createRef, map, tween } from "@motion-canvas/core";
+import { all, createRef, map, tween, waitFor } from "@motion-canvas/core";
 
 export default makeScene2D(function* (view) {
   // // Create your animations here
@@ -36,14 +36,24 @@ export default makeScene2D(function* (view) {
           color="white"
         />
         <Txt text="notifications" fontSize={30} fill="white" />
-        <Layout grow={1} />
+        <Layout grow={1} width={100} />
         <Circle size={40} fill="#a6e3a1" />
         <Circle size={40} fill="#f9e2af" />
         <Circle size={40} fill="#f38ba8" />
       </Layout>
-      <Txt text="Hello, world!" fontSize={100} fill="white" />
+      <Txt text="Hello, world!" fontSize={60} fill="white" />
     </Rect>,
   );
 
-  yield* rect().y(-200, 2).wait(1).to(0, 2);
+  rect().opacity(0);
+  rect().scale(0.5);
+  rect().y(-200);
+
+  yield* all(
+    rect().opacity(1, 0.5),
+    rect().scale(1, 0.5),
+    rect().y(0, 0.5),
+  );
+
+  yield* waitFor(1);
 });
